@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="[3,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="bossapi"
+version="1.0.0"
+displayName="Boss API"
+description='''
+Reusable framework and in-game editor for building and deterministically testing GeckoLib bosses.
+'''
+
+[[dependencies.bossapi]]
+    modId="neoforge"
+    type="required"
+    versionRange="[26.2,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.bossapi]]
+    modId="minecraft"
+    type="required"
+    versionRange="[26.2]"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.bossapi]]
+    modId="geckolib"
+    type="required"
+    versionRange="[5.5.3,)"
+    ordering="NONE"
+    side="BOTH"

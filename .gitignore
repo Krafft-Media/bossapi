@@ -1,0 +1,37 @@
+# gradle
+build
+.gradle
+
+# idea / eclipse
+out
+*.ipr
+*.iws
+*.iml
+.idea
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# run dirs
+run
+runs
+run-data
+repo
+
+# generated data
+/src/generated/
+
+# machine-local MCP wiring (absolute paths to the local DKO app; regenerated per machine)
+.mcp.json
+
+# DKO machine-local runtime state. Not the whole .dko/ directory: .dko/scripts
+# and .dko/macros hold the project's scripts, which belong in version control.
+.dko/logs/
+.dko/port
+.dko/token
+.dko/results/
+.dko/http.json
+.dko/instances/

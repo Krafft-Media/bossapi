@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "bossapi:item/boss_wand"
+  }
+}
