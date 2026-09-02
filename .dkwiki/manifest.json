@@ -1,0 +1,101 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Krafft-Media/DKWiki/main/schema/manifest.schema.json",
+  "schemaVersion": 1,
+  "name": "Boss API",
+  "slug": "bossapi",
+  "description": "A reusable NeoForge framework and in-game editor for building GeckoLib bosses and testing their attacks one at a time, deterministically.",
+  "repo": "https://github.com/Krafft-Media/bossapi",
+  "icon": "icon.svg",
+  "docs": [
+    {
+      "type": "markdown",
+      "id": "index",
+      "title": "Overview",
+      "path": "docs/index.md"
+    },
+    {
+      "type": "markdown",
+      "id": "quick-start",
+      "title": "Quick Start",
+      "path": "docs/quick-start.md",
+      "role": "quickstart"
+    },
+    {
+      "type": "markdown",
+      "id": "features",
+      "title": "Features",
+      "path": "docs/features.md",
+      "role": "features"
+    },
+    {
+      "type": "markdown",
+      "id": "cat-framework",
+      "title": "The Framework",
+      "path": "docs/cat-framework.md",
+      "role": "category"
+    },
+    {
+      "type": "markdown",
+      "id": "cat-testing",
+      "title": "Driving & Testing",
+      "path": "docs/cat-testing.md",
+      "role": "category"
+    },
+    {
+      "type": "markdown",
+      "id": "feat-beboss",
+      "title": "The BEBoss Base",
+      "path": "docs/feat-beboss.md",
+      "role": "feature",
+      "category": "cat-framework"
+    },
+    {
+      "type": "markdown",
+      "id": "feat-controlled-goals",
+      "title": "Controlled Goals",
+      "path": "docs/feat-controlled-goals.md",
+      "role": "feature",
+      "category": "cat-framework"
+    },
+    {
+      "type": "markdown",
+      "id": "feat-states",
+      "title": "Animation States",
+      "path": "docs/feat-states.md",
+      "role": "feature",
+      "category": "cat-framework"
+    },
+    {
+      "type": "markdown",
+      "id": "feat-selection",
+      "title": "Selection & Manual Control",
+      "path": "docs/feat-selection.md",
+      "role": "feature",
+      "category": "cat-testing"
+    },
+    {
+      "type": "markdown",
+      "id": "feat-commands",
+      "title": "The /boss Commands",
+      "path": "docs/feat-commands.md",
+      "role": "feature",
+      "category": "cat-testing"
+    },
+    {
+      "type": "markdown",
+      "id": "feat-wand",
+      "title": "The Boss Wand",
+      "path": "docs/feat-wand.md",
+      "role": "feature",
+      "category": "cat-testing"
+    },
+    {
+      "type": "markdown",
+      "id": "feat-editor",
+      "title": "The Editor Screen",
+      "path": "docs/feat-editor.md",
+      "role": "feature",
+      "category": "cat-testing"
+    }
+  ]
+}

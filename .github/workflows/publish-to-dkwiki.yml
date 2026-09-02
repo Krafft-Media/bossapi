@@ -1,0 +1,98 @@
+# Publishes this project's manifest, icon and docs into the DKWiki registry.
+#
+# Based on the behaviour documented at
+# https://dkwiki.daniel-153.workers.dev/p/dkwiki/registering/ and the DKOrchestrator entry's
+# workflow. Two project-specific values: PROJECT_SLUG, and the copy step (this project keeps
+# all of its docs under docs/, so nothing extra is copied from the repo root).
+
+name: Publish to DKWiki
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'docs/**'
+      - '.dkwiki/**'
+      - '.github/workflows/publish-to-dkwiki.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: dkwiki-publish-${{ github.repository }}
+  cancel-in-progress: false
+
+env:
+  # PROJECT-SPECIFIC: must equal the `slug` in .dkwiki/manifest.json.
+  PROJECT_SLUG: bossapi
+  WIKI_REPO: Krafft-Media/DKWiki
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this project
+        uses: actions/checkout@v4
+        with:
+          path: project
+
+      - name: Check out the wiki
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.WIKI_REPO }}
+          token: ${{ secrets.DKWIKI_PUSH_TOKEN }}
+          path: wiki
+
+      # Replace the entry wholesale rather than merging into it, so a doc removed from
+      # this repo disappears from the wiki instead of lingering.
+      - name: Rebuild registry/${{ env.PROJECT_SLUG }}
+        run: |
+          set -euo pipefail
+          entry="wiki/registry/${PROJECT_SLUG}"
+          rm -rf "$entry"
+          mkdir -p "$entry/docs"
+
+          # PROJECT-SPECIFIC copy step. Manifest and icon go to the entry root; all docs
+          # live under docs/ so the whole folder copies across.
+          cp project/.dkwiki/manifest.json "$entry/"
+          cp project/.dkwiki/icon.svg "$entry/"
+          cp -R project/docs/. "$entry/docs/"
+
+      # Cheap local check of the rules that do not need the wiki's own tooling; the wiki
+      # validates properly on its side, but failing here names the problem in this repo's
+      # Actions log rather than in someone else's.
+      - name: Check every path in the manifest exists
+        run: |
+          set -euo pipefail
+          cd "wiki/registry/${PROJECT_SLUG}"
+          python3 - <<'PY'
+          import json, os, sys
+          m = json.load(open("manifest.json", encoding="utf-8-sig"))
+          missing = [d["path"] for d in m["docs"] if not os.path.isfile(d["path"])]
+          if not os.path.isfile(m["icon"]):
+              missing.append(m["icon"])
+          if missing:
+              sys.exit("missing from the entry: " + ", ".join(missing))
+          print(f"ok: {len(m['docs'])} docs + icon present")
+          PY
+
+      - name: Commit and push
+        working-directory: wiki
+        run: |
+          set -euo pipefail
+          git config user.name  'dkwiki-publish[bot]'
+          git config user.email 'dkwiki-publish[bot]@users.noreply.github.com'
+          git add -A "registry/${PROJECT_SLUG}"
+          if git diff --cached --quiet; then
+            echo "no change to registry/${PROJECT_SLUG}"
+            exit 0
+          fi
+          git commit -m "registry: update ${PROJECT_SLUG} (${GITHUB_SHA::7})"
+          # Another project may have published between our checkout and this push.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "push rejected (attempt $attempt); rebasing on the wiki's default branch"
+            git pull --rebase
+          done
+          echo "could not push after 5 attempts" >&2
+          exit 1
