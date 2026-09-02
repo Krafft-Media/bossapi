@@ -5,10 +5,11 @@ a target you choose.
 
 ## 1. Add the dependency
 
-Boss API is a normal NeoForge mod jar. Put it on your project's classpath and declare it as a
-dependency.
+Boss API is a normal NeoForge mod jar. Download `bossapi-<version>.jar` from the
+[**releases page**](https://github.com/Krafft-Media/bossapi/releases/tag/v1.0.0), put it on your
+project's classpath, and declare it as a dependency.
 
-In `build.gradle`:
+Drop the jar in your project's `libs/` folder, then in `build.gradle`:
 
 ```gradle
 dependencies {

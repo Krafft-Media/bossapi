@@ -29,4 +29,11 @@ how you write a mob — you still register it, give it attributes, and add goals
 that the goals you register through Boss API can be *driven*, and the editor and commands can read
 and steer the boss's state live.
 
+## Get it
+
+Download the latest `bossapi-<version>.jar` from the
+[**releases page**](https://github.com/Krafft-Media/bossapi/releases/tag/v1.0.0) (also on the
+**Releases** tab in the sidebar), drop it on your mod's classpath, and declare the dependency — the
+[Quick Start](quick-start) walks through it.
+
 New here? Start with the [Quick Start](quick-start), then browse the [Features](features).
